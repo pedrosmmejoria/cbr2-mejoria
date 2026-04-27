@@ -1911,15 +1911,20 @@ const STYLES = {
   sans: "'Manrope', 'Avenir Next', 'Avenir', 'Helvetica Neue', system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
 };
 
-// ─── Ícono de marca MEJORÍA (flecha circular / símbolo de mejora) ───
-// light=true: círculo blanco (para fondos oscuros navy)
+// ─── Ícono de marca MEJORÍA ───
+// Renderiza bien desde 20px hasta 64px.
+// light=true  → círculo blanco  (para contenedores oscuros / navy)
+// light=false → círculo navy    (para contenedores claros / blancos)
 function MejoriaIcon({ size = 24, light = false, className = '' }) {
-  const circleColor = light ? 'rgba(255,255,255,0.9)' : '#1a3a5c';
+  const circleColor = light ? '#ffffff' : '#1a3a5c';
   return (
-    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <circle cx="38" cy="62" r="28" stroke={circleColor} strokeWidth="11" fill="none" />
-      <line x1="59" y1="41" x2="83" y2="17" stroke="#c9a961" strokeWidth="11" strokeLinecap="round" />
-      <path d="M63 17 L83 17 L83 37" stroke="#c9a961" strokeWidth="11" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    <svg width={size} height={size} viewBox="4 8 88 88" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      {/* Círculo (símbolo de base) */}
+      <circle cx="38" cy="64" r="26" stroke={circleColor} strokeWidth="9" fill="none" />
+      {/* Flecha diagonal */}
+      <line x1="58" y1="44" x2="84" y2="18" stroke="#c9a961" strokeWidth="9" strokeLinecap="round" />
+      {/* Punta de flecha */}
+      <path d="M64 18 L84 18 L84 38" stroke="#c9a961" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </svg>
   );
 }
@@ -2074,7 +2079,7 @@ export default function App() {
         <GlobalStyles />
         <div className="text-center cbr-splash">
           <div className="flex items-center justify-center w-20 h-20 mx-auto mb-5 rounded-2xl cbr-pulse-glow" style={{ backgroundColor: COLORS.primary }}>
-            <MejoriaIcon size={38} light />
+            <MejoriaIcon size={42} light />
           </div>
           <div className="text-4xl mb-2" style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.03em' }}>CBR <span style={{ color: COLORS.accent }}>2.0</span></div>
           <div className="text-[11px] tracking-[0.3em] uppercase mb-1" style={{ color: COLORS.textMuted, fontWeight: 700 }}>Tu prep para el examen JTBR</div>
@@ -2124,8 +2129,8 @@ function Header({ view, setView }) {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between py-3.5 sm:py-4">
           <button onClick={() => setView('home')} className="flex items-center gap-3 group">
-            <div className="flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-xl transition-transform group-hover:scale-105" style={{ backgroundColor: COLORS.primary, boxShadow: `0 2px 8px ${COLORS.primary}33` }}>
-              <MejoriaIcon size={22} />
+            <div className="flex items-center justify-center w-11 h-11 rounded-xl transition-transform group-hover:scale-105" style={{ backgroundColor: COLORS.primary, boxShadow: `0 2px 10px ${COLORS.primary}44` }}>
+              <MejoriaIcon size={28} light />
             </div>
             <div className="text-left">
               <div className="text-lg sm:text-xl leading-tight" style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.02em' }}>CBR <span style={{ color: COLORS.accent }}>2.0</span></div>
@@ -2223,7 +2228,7 @@ function Footer() {
           </div>
           <div className="text-xs leading-relaxed sm:text-right" style={{ color: COLORS.textMuted }}>
             <div className="flex items-center sm:justify-end gap-2 mb-1">
-              <MejoriaIcon size={16} />
+              <MejoriaIcon size={20} />
               <span>by <strong style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 700, fontSize: '13px', letterSpacing: '0.04em' }}>MEJORÍA</strong></span>
             </div>
             <div>Material no oficial. Referencia académica.</div>
@@ -2368,33 +2373,20 @@ function HomeView({ setView, setSelectedBlock, stats }) {
       {/* ─── HERO CARD ─── */}
       <section className="cbr-fade-up rounded-2xl overflow-hidden relative" style={{ backgroundColor: COLORS.primary, minHeight: '21rem' }}>
 
-        {/* Foto real estate (dos personas) — fade a la izquierda */}
+        {/* Foto (dos personas) — máxima calidad, fade izquierdo */}
         <div className="absolute right-0 top-0 h-full" style={{ width: '46%' }}>
           <img
-            src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop"
+            src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?w=1400&fit=crop"
             alt=""
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover object-top"
             onError={e => { e.currentTarget.style.display = 'none'; }}
           />
-          {/* Gradient blend izquierda → transparente */}
-          <div className="absolute inset-0" style={{ background: `linear-gradient(to right, ${COLORS.primary} 0%, ${COLORS.primary}cc 15%, ${COLORS.primary}55 45%, transparent 75%)` }} />
-          {/* Fade inferior */}
-          <div className="absolute bottom-0 left-0 right-0" style={{ height: '5rem', background: `linear-gradient(to top, ${COLORS.primary}, transparent)` }} />
+          <div className="absolute inset-0" style={{ background: `linear-gradient(to right, ${COLORS.primary} 0%, ${COLORS.primary}c0 12%, ${COLORS.primary}40 45%, transparent 72%)` }} />
+          <div className="absolute bottom-0 left-0 right-0" style={{ height: '4rem', background: `linear-gradient(to top, ${COLORS.primary}, transparent)` }} />
         </div>
 
-        {/* Top bar */}
-        <div className="relative flex items-center justify-between px-6 sm:px-8 pt-6 sm:pt-7">
-          <div className="flex items-center gap-2">
-            <MejoriaIcon size={22} light />
-            <span className="text-[10px] tracking-[0.25em] uppercase" style={{ color: COLORS.accent, fontWeight: 700 }}>by MEJORÍA</span>
-          </div>
-          <div className="text-[10px] tracking-[0.18em] uppercase" style={{ color: 'rgba(255,255,255,0.3)', fontWeight: 600 }}>
-            CBR <span style={{ color: COLORS.accent }}>2.0</span>
-          </div>
-        </div>
-
-        {/* Contenido principal — padding derecho deja espacio a la foto */}
-        <div className="relative px-6 sm:px-8 pt-5 pb-6" style={{ paddingRight: 'max(5rem, 47%)' }}>
+        {/* Contenido principal */}
+        <div className="relative px-6 sm:px-8 pt-7 pb-6" style={{ paddingRight: 'max(5rem, 47%)' }}>
           <h1 style={{ color: '#fff', fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.025em', lineHeight: 1.0, marginBottom: '0.9rem', fontSize: 'clamp(2rem, 7vw, 3.25rem)' }}>
             Prepárate<br />para el <span style={{ color: COLORS.accent }}>JTBR</span>
           </h1>
