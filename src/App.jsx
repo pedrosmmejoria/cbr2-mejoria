@@ -1912,19 +1912,22 @@ const STYLES = {
 };
 
 // ─── Ícono de marca MEJORÍA ───
-// Renderiza bien desde 20px hasta 64px.
-// light=true  → círculo blanco  (para contenedores oscuros / navy)
-// light=false → círculo navy    (para contenedores claros / blancos)
-function MejoriaIcon({ size = 24, light = false, className = '' }) {
-  const circleColor = light ? '#ffffff' : '#1a3a5c';
+// Símbolo Mars/flecha circular, dos colores de marca exactos.
+//
+// variant="default" → círculo #1a3a5c + flecha #c9a961  (fondos claros)
+// variant="gold"    → todo #c9a961 una tinta            (fondos oscuros navy)
+//
+// Geometría derivada matemáticamente:
+//   Canvas 100×100. Círculo cx=42 cy=58 r=30 sw=12.
+//   Borde exterior stroke en 45°: (42+(30+6)·cos45°, 58−(30+6)·sin45°) ≈ (67,33)
+//   Punta flecha: (92,8). Brazos cabeza: 24 unidades c/u.
+function MejoriaIcon({ size = 24, variant = 'default', className = '' }) {
+  const c = variant === 'gold' ? '#c9a961' : '#1a3a5c';
   return (
-    <svg width={size} height={size} viewBox="4 8 88 88" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      {/* Círculo (símbolo de base) */}
-      <circle cx="38" cy="64" r="26" stroke={circleColor} strokeWidth="9" fill="none" />
-      {/* Flecha diagonal */}
-      <line x1="58" y1="44" x2="84" y2="18" stroke="#c9a961" strokeWidth="9" strokeLinecap="round" />
-      {/* Punta de flecha */}
-      <path d="M64 18 L84 18 L84 38" stroke="#c9a961" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <circle cx="42" cy="58" r="30" stroke={c} strokeWidth="12" fill="none" />
+      <line x1="67" y1="33" x2="92" y2="8" stroke="#c9a961" strokeWidth="12" strokeLinecap="round" />
+      <path d="M68 8 L92 8 L92 32" stroke="#c9a961" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </svg>
   );
 }
@@ -2079,7 +2082,7 @@ export default function App() {
         <GlobalStyles />
         <div className="text-center cbr-splash">
           <div className="flex items-center justify-center w-20 h-20 mx-auto mb-5 rounded-2xl cbr-pulse-glow" style={{ backgroundColor: COLORS.primary }}>
-            <MejoriaIcon size={42} light />
+            <MejoriaIcon size={42} variant="gold" />
           </div>
           <div className="text-4xl mb-2" style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.03em' }}>CBR <span style={{ color: COLORS.accent }}>2.0</span></div>
           <div className="text-[11px] tracking-[0.3em] uppercase mb-1" style={{ color: COLORS.textMuted, fontWeight: 700 }}>Tu prep para el examen JTBR</div>
@@ -2130,7 +2133,7 @@ function Header({ view, setView }) {
         <div className="flex items-center justify-between py-3.5 sm:py-4">
           <button onClick={() => setView('home')} className="flex items-center gap-3 group">
             <div className="flex items-center justify-center w-11 h-11 rounded-xl transition-transform group-hover:scale-105" style={{ backgroundColor: COLORS.primary, boxShadow: `0 2px 10px ${COLORS.primary}44` }}>
-              <MejoriaIcon size={28} light />
+              <MejoriaIcon size={28} variant="gold" />
             </div>
             <div className="text-left">
               <div className="text-lg sm:text-xl leading-tight" style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.02em' }}>CBR <span style={{ color: COLORS.accent }}>2.0</span></div>
@@ -2219,7 +2222,7 @@ function Footer() {
         <div className="flex flex-col sm:flex-row justify-between gap-6 sm:items-end">
           <div className="flex items-start gap-3">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl" style={{ backgroundColor: COLORS.primary }}>
-              <MejoriaIcon size={22} />
+              <MejoriaIcon size={24} variant="gold" />
             </div>
             <div>
               <div className="text-xl leading-tight" style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.02em' }}>CBR <span style={{ color: COLORS.accent }}>2.0</span></div>
