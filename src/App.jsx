@@ -2350,9 +2350,8 @@ function HomeView({ setView, setSelectedBlock, stats }) {
           <Sparkles size={14} style={{ color: COLORS.accent }} />
           <div className="text-[11px] sm:text-xs tracking-[0.3em] uppercase" style={{ color: COLORS.accent, fontWeight: 700 }}>Plataforma de preparación</div>
         </div>
-        <h1 className="text-4xl sm:text-6xl md:text-7xl leading-[1.02] mb-5 sm:mb-6 max-w-4xl" style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.03em' }}>
-          Prepárate para la<br/>
-          <span style={{ color: COLORS.accent }}>prueba de la JTBR</span>
+        <h1 className="text-3xl sm:text-6xl md:text-7xl leading-tight mb-5 sm:mb-6 max-w-4xl" style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.02em' }}>
+          Prepárate para la <span style={{ color: COLORS.accent }}>prueba de la JTBR</span>
         </h1>
         <p className="text-sm sm:text-base leading-relaxed max-w-2xl" style={{ color: COLORS.textMuted, fontWeight: 400 }}>
           {QUESTIONS.length} preguntas verificadas contra textos legales oficiales, calculadora paso a paso para ITBI y Ganancia de Capital, biblioteca de recursos consultables y simulador de examen.
