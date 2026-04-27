@@ -1912,11 +1912,12 @@ const STYLES = {
 };
 
 // ─── Ícono de marca MEJORÍA (flecha circular / símbolo de mejora) ───
-function MejoriaIcon({ size = 24, className = '' }) {
-  const s = size;
+// light=true: círculo blanco (para fondos oscuros navy)
+function MejoriaIcon({ size = 24, light = false, className = '' }) {
+  const circleColor = light ? 'rgba(255,255,255,0.9)' : '#1a3a5c';
   return (
-    <svg width={s} height={s} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <circle cx="38" cy="62" r="28" stroke="#1a3a5c" strokeWidth="11" fill="none" />
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <circle cx="38" cy="62" r="28" stroke={circleColor} strokeWidth="11" fill="none" />
       <line x1="59" y1="41" x2="83" y2="17" stroke="#c9a961" strokeWidth="11" strokeLinecap="round" />
       <path d="M63 17 L83 17 L83 37" stroke="#c9a961" strokeWidth="11" strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </svg>
@@ -2073,7 +2074,7 @@ export default function App() {
         <GlobalStyles />
         <div className="text-center cbr-splash">
           <div className="flex items-center justify-center w-20 h-20 mx-auto mb-5 rounded-2xl cbr-pulse-glow" style={{ backgroundColor: COLORS.primary }}>
-            <GraduationCap size={32} style={{ color: COLORS.accent }} strokeWidth={2} />
+            <MejoriaIcon size={38} light />
           </div>
           <div className="text-4xl mb-2" style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.03em' }}>CBR <span style={{ color: COLORS.accent }}>2.0</span></div>
           <div className="text-[11px] tracking-[0.3em] uppercase mb-1" style={{ color: COLORS.textMuted, fontWeight: 700 }}>Tu prep para el examen JTBR</div>
@@ -2364,102 +2365,98 @@ function HomeView({ setView, setSelectedBlock, stats }) {
   return (
     <div className="space-y-8 sm:space-y-12">
 
-      {/* ─── HERO CARD (dark) ─── */}
-      <section className="cbr-fade-up rounded-2xl overflow-hidden relative" style={{ backgroundColor: COLORS.primary }}>
-        {/* Geometric background decoration */}
-        <svg className="absolute right-0 top-0 h-full opacity-[0.04]" viewBox="0 0 300 400" fill="none" style={{ width: 'auto' }}>
-          <circle cx="200" cy="80" r="140" stroke="white" strokeWidth="1" />
-          <circle cx="200" cy="80" r="100" stroke="white" strokeWidth="0.8" />
-          <circle cx="200" cy="80" r="60" stroke="white" strokeWidth="0.6" />
-          <line x1="60" y1="0" x2="300" y2="400" stroke="white" strokeWidth="0.5" />
-          <line x1="0" y1="100" x2="300" y2="300" stroke="white" strokeWidth="0.5" />
-        </svg>
+      {/* ─── HERO CARD ─── */}
+      <section className="cbr-fade-up rounded-2xl overflow-hidden relative" style={{ backgroundColor: COLORS.primary, minHeight: '21rem' }}>
 
-        {/* Top bar: MEJORÍA brand + CBR label */}
-        <div className="relative flex items-center justify-between px-6 sm:px-8 pt-6 sm:pt-8">
-          <div className="flex items-center gap-2.5">
-            <MejoriaIcon size={22} />
-            <span className="text-[10px] tracking-[0.28em] uppercase" style={{ color: COLORS.accent, fontWeight: 700 }}>by MEJORÍA</span>
+        {/* Foto real estate (dos personas) — fade a la izquierda */}
+        <div className="absolute right-0 top-0 h-full" style={{ width: '46%' }}>
+          <img
+            src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop"
+            alt=""
+            className="w-full h-full object-cover object-center"
+            onError={e => { e.currentTarget.style.display = 'none'; }}
+          />
+          {/* Gradient blend izquierda → transparente */}
+          <div className="absolute inset-0" style={{ background: `linear-gradient(to right, ${COLORS.primary} 0%, ${COLORS.primary}cc 15%, ${COLORS.primary}55 45%, transparent 75%)` }} />
+          {/* Fade inferior */}
+          <div className="absolute bottom-0 left-0 right-0" style={{ height: '5rem', background: `linear-gradient(to top, ${COLORS.primary}, transparent)` }} />
+        </div>
+
+        {/* Top bar */}
+        <div className="relative flex items-center justify-between px-6 sm:px-8 pt-6 sm:pt-7">
+          <div className="flex items-center gap-2">
+            <MejoriaIcon size={22} light />
+            <span className="text-[10px] tracking-[0.25em] uppercase" style={{ color: COLORS.accent, fontWeight: 700 }}>by MEJORÍA</span>
           </div>
-          <div className="flex items-center gap-1.5 text-[10px] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,255,255,0.35)', fontWeight: 600 }}>
-            <span>CBR</span><span style={{ color: COLORS.accent }}>2.0</span>
+          <div className="text-[10px] tracking-[0.18em] uppercase" style={{ color: 'rgba(255,255,255,0.3)', fontWeight: 600 }}>
+            CBR <span style={{ color: COLORS.accent }}>2.0</span>
           </div>
         </div>
 
-        {/* Main hero body */}
-        <div className="relative px-6 sm:px-8 pt-6 pb-7 sm:pb-8 flex items-end gap-4 sm:gap-6">
-          {/* Left: text */}
-          <div className="flex-1 min-w-0">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl leading-[1.0] mb-4" style={{ color: '#fff', fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.025em' }}>
-              Prepárate<br />para el <span style={{ color: COLORS.accent }}>JTBR</span>
-            </h1>
-            <div className="w-8 h-[2px] mb-4 rounded-full" style={{ backgroundColor: COLORS.accent }} />
-            <p className="text-sm leading-relaxed mb-6" style={{ color: 'rgba(255,255,255,0.55)', maxWidth: '26rem' }}>
-              Todo lo que necesitas para aprobar. Contenido actualizado, herramientas inteligentes y práctica real.
-            </p>
+        {/* Contenido principal — padding derecho deja espacio a la foto */}
+        <div className="relative px-6 sm:px-8 pt-5 pb-6" style={{ paddingRight: 'max(5rem, 47%)' }}>
+          <h1 style={{ color: '#fff', fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.025em', lineHeight: 1.0, marginBottom: '0.9rem', fontSize: 'clamp(2rem, 7vw, 3.25rem)' }}>
+            Prepárate<br />para el <span style={{ color: COLORS.accent }}>JTBR</span>
+          </h1>
+          <div className="rounded-full mb-3" style={{ width: '2rem', height: '2px', backgroundColor: COLORS.accent }} />
+          <p className="text-sm leading-relaxed mb-5" style={{ color: 'rgba(255,255,255,0.52)' }}>
+            Todo lo que necesitas para aprobar. Contenido actualizado, herramientas y práctica real.
+          </p>
 
-            {/* Feature pills */}
-            <div className="flex flex-wrap gap-2 mb-6">
-              {[
-                { icon: BookOpen,    label: 'Contenido confiable' },
-                { icon: Calculator,  label: 'Herramientas' },
-                { icon: TrendingUp,  label: 'Práctica real' },
-              ].map(({ icon: Icon, label }) => (
-                <div key={label} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)' }}>
-                  <Icon size={11} style={{ color: COLORS.accent }} strokeWidth={2} />
-                  <span className="text-[11px]" style={{ color: 'rgba(255,255,255,0.7)', fontWeight: 500 }}>{label}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA buttons */}
-            <div className="flex flex-wrap gap-2.5">
-              <button onClick={() => setView('blocks')}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-xs tracking-wider uppercase font-semibold transition-all active:scale-95"
-                style={{ backgroundColor: COLORS.accent, color: COLORS.primary, boxShadow: `0 4px 16px ${COLORS.accent}44` }}>
-                Estudiar ahora <ChevronRight size={14} strokeWidth={2.5} />
-              </button>
-              <button onClick={() => setView('exam')}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-xs tracking-wider uppercase font-semibold transition-all active:scale-95"
-                style={{ backgroundColor: 'rgba(255,255,255,0.1)', color: '#fff', border: '1px solid rgba(255,255,255,0.18)' }}>
-                <Trophy size={14} strokeWidth={2} /> Simulacro
-              </button>
-            </div>
-          </div>
-
-          {/* Right: question count ring */}
-          <div className="shrink-0 flex flex-col items-center justify-center relative"
-            style={{ width: '6.5rem', height: '6.5rem', minWidth: '6.5rem' }}>
-            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 104 104">
-              <circle cx="52" cy="52" r="48" stroke={COLORS.accent} strokeWidth="1.5" fill="none" strokeOpacity="0.15" strokeDasharray="5 3" />
-              <circle cx="52" cy="52" r="38" stroke="rgba(255,255,255,0.06)" strokeWidth="1" fill="none" />
-            </svg>
-            <div className="relative z-10 text-center">
-              <div className="text-3xl sm:text-4xl leading-none" style={{ color: '#fff', fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.03em' }}>{stats.total}</div>
-              <div className="text-[8px] tracking-[0.18em] uppercase mt-1" style={{ color: COLORS.accent, fontWeight: 700 }}>preguntas</div>
-              <div className="text-[8px] tracking-[0.1em] uppercase" style={{ color: 'rgba(255,255,255,0.35)', fontWeight: 500 }}>verificadas</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Progress strip (only if user has answered) */}
-        {stats.answered > 0 && (
-          <div className="relative mx-6 sm:mx-8 mb-6 sm:mb-8 grid grid-cols-3 gap-px rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
+          {/* Features */}
+          <div className="flex flex-col gap-1.5 mb-5">
             {[
-              { label: 'Respondidas', value: `${stats.answered}/${stats.total}`, icon: ListChecks, accent: false },
-              { label: 'Correctas',   value: stats.correct,                       icon: Check,      accent: false },
-              { label: 'Acierto',     value: `${pctTotal}%`,                      icon: Target,     accent: true  },
-            ].map(({ label, value, icon: Icon, accent }) => (
-              <div key={label} className="py-3 px-3 sm:px-4" style={{ backgroundColor: 'rgba(255,255,255,0.05)' }}>
-                <div className="flex items-center gap-1 mb-1.5">
-                  <Icon size={10} style={{ color: accent ? COLORS.accent : 'rgba(255,255,255,0.35)' }} />
-                  <div className="text-[9px] uppercase tracking-[0.15em]" style={{ color: 'rgba(255,255,255,0.35)', fontWeight: 600 }}>{label}</div>
-                </div>
-                <div className="text-lg sm:text-xl leading-tight" style={{ color: accent ? COLORS.accent : '#fff', fontFamily: STYLES.serif, fontWeight: 600 }}>{value}</div>
+              { icon: BookOpen,   label: 'Contenido confiable' },
+              { icon: Calculator, label: 'Herramientas inteligentes' },
+              { icon: TrendingUp, label: 'Práctica que te acerca al éxito' },
+            ].map(({ icon: Icon, label }) => (
+              <div key={label} className="flex items-center gap-2">
+                <Icon size={11} style={{ color: COLORS.accent }} strokeWidth={2} />
+                <span className="text-[12px]" style={{ color: 'rgba(255,255,255,0.65)', fontWeight: 500 }}>{label}</span>
               </div>
             ))}
           </div>
-        )}
+
+          {/* CTAs */}
+          <div className="flex flex-wrap gap-2">
+            <button onClick={() => setView('blocks')}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs tracking-wider uppercase font-semibold transition-all active:scale-95"
+              style={{ backgroundColor: COLORS.accent, color: COLORS.primary, boxShadow: `0 4px 14px ${COLORS.accent}40` }}>
+              Estudiar <ChevronRight size={13} strokeWidth={2.5} />
+            </button>
+            <button onClick={() => setView('exam')}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs tracking-wider uppercase font-semibold transition-all active:scale-95"
+              style={{ backgroundColor: 'rgba(255,255,255,0.09)', color: '#fff', border: '1px solid rgba(255,255,255,0.15)' }}>
+              <Trophy size={13} strokeWidth={2} /> Simulacro
+            </button>
+          </div>
+        </div>
+
+        {/* Strip inferior — progreso o conteo de preguntas */}
+        <div className="relative mx-6 sm:mx-8 mb-6">
+          {stats.answered > 0 ? (
+            <div className="grid grid-cols-3 gap-px rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
+              {[
+                { label: 'Respondidas', value: `${stats.answered}/${stats.total}`, icon: ListChecks, accent: false },
+                { label: 'Correctas',   value: stats.correct,                       icon: Check,      accent: false },
+                { label: 'Acierto',     value: `${pctTotal}%`,                      icon: Target,     accent: true },
+              ].map(({ label, value, icon: Icon, accent: isAccent }) => (
+                <div key={label} className="py-3 px-3" style={{ backgroundColor: 'rgba(255,255,255,0.05)' }}>
+                  <div className="flex items-center gap-1 mb-1">
+                    <Icon size={9} style={{ color: isAccent ? COLORS.accent : 'rgba(255,255,255,0.35)' }} />
+                    <div className="text-[9px] uppercase tracking-[0.12em]" style={{ color: 'rgba(255,255,255,0.35)', fontWeight: 600 }}>{label}</div>
+                  </div>
+                  <div className="text-base sm:text-lg leading-tight" style={{ color: isAccent ? COLORS.accent : '#fff', fontFamily: STYLES.serif, fontWeight: 600 }}>{value}</div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center gap-3 py-2.5 px-4 rounded-xl" style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <span style={{ color: COLORS.accent, fontFamily: STYLES.serif, fontWeight: 700, fontSize: '1.1rem' }}>{stats.total}</span>
+              <span className="text-[11px]" style={{ color: 'rgba(255,255,255,0.42)' }}>preguntas verificadas · Empieza cuando quieras</span>
+            </div>
+          )}
+        </div>
       </section>
 
       {/* ─── MODOS ─── */}
@@ -2475,7 +2472,7 @@ function HomeView({ setView, setSelectedBlock, stats }) {
 
       {/* ─── HERRAMIENTAS ─── */}
       <section className="cbr-fade-up cbr-stagger-2">
-        <SectionHeader pre="Herramientas" title="Recursos avanzados" icon={Sparkles} />
+        <SectionHeader pre="Herramientas" title="Recursos avanzados" icon={Zap} />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px rounded-xl overflow-hidden" style={{ backgroundColor: COLORS.border }}>
           <ToolCard icon={Library} title="Biblioteca por bloques" desc="Material completo organizado por los 10 bloques del temario: tablas, fórmulas, plazos y normas." badge={`${Object.keys(RESOURCES).length} guías`} onClick={() => setView('resources')} />
           <ToolCard icon={Calculator} title="Calculadora tributaria" desc="ITBI, Ganancia de Capital, Patrimonio Familiar y catastral actualizado paso a paso." badge="Permitida en examen" onClick={() => setView('calculator')} />
@@ -3323,7 +3320,7 @@ function ResultBox({ label, value, secondary }) {
   return (
     <div className="p-5 mt-4 rounded-xl" style={{ backgroundColor: COLORS.primary, color: COLORS.accent, boxShadow: `0 2px 8px ${COLORS.primary}30` }}>
       <div className="flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase mb-1" style={{ fontWeight: 600 }}>
-        <Sparkles size={11} /> {label}
+        {label}
       </div>
       <div className="text-2xl sm:text-3xl break-words" style={{ fontFamily: STYLES.serif, fontWeight: 600 }}>{value}</div>
       {secondary && <div className="text-xs mt-2" style={{ color: COLORS.bgCard }}>{secondary}</div>}
