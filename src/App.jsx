@@ -1935,6 +1935,34 @@ function GlobalStyles() {
       .cbr-stagger-4 { animation-delay: 0.28s; opacity: 0; }
       .cbr-no-scrollbar::-webkit-scrollbar { display: none; }
       .cbr-no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+      /* — Transición de vista tipo push iOS — */
+      @keyframes cbrViewEnter {
+        from { opacity: 0; transform: translateX(18px); }
+        to   { opacity: 1; transform: translateX(0); }
+      }
+      .cbr-view-enter {
+        animation: cbrViewEnter 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        will-change: transform, opacity;
+      }
+
+      /* — Spring press en botones táctiles — */
+      button { -webkit-tap-highlight-color: rgba(0,0,0,0); }
+      button:active { transition: transform 0.08s cubic-bezier(0.34, 1.56, 0.64, 1) !important; }
+
+      /* — Tab bar icon spring — */
+      .cbr-tab-icon {
+        transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      button:active .cbr-tab-icon { transform: scale(0.82) !important; }
+
+      /* — Feedback háptico visual en cards — */
+      .cbr-card-press { transition: transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.1s ease; }
+      .cbr-card-press:active { transform: scale(0.975); }
+
+      /* — Selector de opciones (quiz/exam) — */
+      .cbr-option-btn { transition: transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease; }
+      .cbr-option-btn:active { transform: scale(0.98); }
     `}</style>
   );
 }
@@ -2040,17 +2068,19 @@ export default function App() {
     <div className="min-h-screen" style={{ backgroundColor: COLORS.bg, color: COLORS.text, fontFamily: STYLES.sans }}>
       <GlobalStyles />
       <Header view={view} setView={setView} />
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-5 sm:py-10 pb-24 md:pb-10">
-        {view === 'home' && <HomeView setView={setView} setSelectedBlock={setSelectedBlock} stats={stats} />}
-        {view === 'blocks' && <BlocksView setView={setView} setSelectedBlock={setSelectedBlock} stats={stats} />}
-        {view === 'study' && selectedBlock && <StudyView block={selectedBlock} setView={setView} progress={progress} recordAnswer={recordAnswer} />}
-        {view === 'flashcards' && <FlashcardsView setView={setView} />}
-        {view === 'quiz' && <QuizView setView={setView} recordAnswer={recordAnswer} />}
-        {view === 'exam' && <ExamView setView={setView} examHistory={examHistory} saveHistory={saveHistory} recordAnswer={recordAnswer} />}
-        {view === 'errors' && <ErrorsView setView={setView} errors={errors} recordAnswer={recordAnswer} removeFromErrors={removeFromErrors} />}
-        {view === 'resources' && <ResourcesView setView={setView} />}
-        {view === 'calculator' && <CalculatorView setView={setView} />}
-        {view === 'stats' && <StatsView stats={stats} examHistory={examHistory} resetAll={resetAll} />}
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-5 sm:py-10 cbr-pb-nav md:pb-10">
+        <div key={`${view}-${selectedBlock}`} className="cbr-view-enter">
+          {view === 'home' && <HomeView setView={setView} setSelectedBlock={setSelectedBlock} stats={stats} />}
+          {view === 'blocks' && <BlocksView setView={setView} setSelectedBlock={setSelectedBlock} stats={stats} />}
+          {view === 'study' && selectedBlock && <StudyView block={selectedBlock} setView={setView} progress={progress} recordAnswer={recordAnswer} />}
+          {view === 'flashcards' && <FlashcardsView setView={setView} />}
+          {view === 'quiz' && <QuizView setView={setView} recordAnswer={recordAnswer} />}
+          {view === 'exam' && <ExamView setView={setView} examHistory={examHistory} saveHistory={saveHistory} recordAnswer={recordAnswer} />}
+          {view === 'errors' && <ErrorsView setView={setView} errors={errors} recordAnswer={recordAnswer} removeFromErrors={removeFromErrors} />}
+          {view === 'resources' && <ResourcesView setView={setView} />}
+          {view === 'calculator' && <CalculatorView setView={setView} />}
+          {view === 'stats' && <StatsView stats={stats} examHistory={examHistory} resetAll={resetAll} />}
+        </div>
       </main>
       <Footer />
       <BottomTabBar view={view} setView={setView} />
@@ -2070,7 +2100,7 @@ function Header({ view, setView }) {
     { id: 'stats', label: 'Progreso', icon: BarChart3 },
   ];
   return (
-    <header className="sticky top-0 z-40" style={{ backgroundColor: COLORS.bgCard, borderBottom: `1px solid ${COLORS.border}` }}>
+    <header className="sticky top-0 z-40 cbr-header-safe" style={{ backgroundColor: COLORS.bgCard, borderBottom: `1px solid ${COLORS.border}` }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between py-3.5 sm:py-4">
           <button onClick={() => setView('home')} className="flex items-center gap-3 group">
@@ -2142,7 +2172,7 @@ function BottomTabBar({ view, setView }) {
               {isActive && (
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-b" style={{ backgroundColor: COLORS.accent }} />
               )}
-              <div className="flex items-center justify-center w-9 h-9 rounded-xl transition-all" style={{ backgroundColor: isActive ? COLORS.bgSoft : 'transparent' }}>
+              <div className="flex items-center justify-center w-9 h-9 rounded-xl transition-all cbr-tab-icon" style={{ backgroundColor: isActive ? COLORS.bgSoft : 'transparent' }}>
                 <Icon size={20} strokeWidth={isActive ? 2.4 : 1.8} style={{ color: isActive ? COLORS.primary : COLORS.textLight }} />
               </div>
               <span className="text-[9px] uppercase tracking-wider" style={{ fontWeight: isActive ? 700 : 500, color: isActive ? COLORS.primary : COLORS.textLight }}>{item.label}</span>

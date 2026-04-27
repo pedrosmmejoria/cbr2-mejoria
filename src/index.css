@@ -8,10 +8,57 @@ html, body {
   background-color: #f7f5f0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overscroll-behavior-y: none;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 #root {
   min-height: 100vh;
   min-height: 100dvh;
+}
+
+/* ─── iOS native-feel: elimina el flash azul en CADA tap ─── */
+*, *::before, *::after {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-touch-callout: none;
+}
+
+/* Respuesta instantánea — elimina delay de 300ms */
+button, a, [role="button"], label, select {
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+/* Previene zoom en focus de inputs (iOS zooms si font < 16px) */
+input, select, textarea {
+  font-size: max(16px, 1em);
+  -webkit-appearance: none;
+}
+
+/* Sin selección de texto en chrome de la app */
+button, nav, header, [role="tab"] {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Momentum scrolling en contenedores scroll horizontal */
+.scroll-ios {
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+}
+
+/* Safe area para header en standalone (Dynamic Island / notch) */
+@media (display-mode: standalone) {
+  .cbr-header-safe {
+    padding-top: env(safe-area-inset-top);
+    background-color: inherit;
+  }
+}
+
+/* Safe area siempre activa (Safari standalone = navigator.standalone) */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .cbr-safe-top { padding-top: env(safe-area-inset-top); }
+  .cbr-safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+  .cbr-pb-nav { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom)); }
 }
