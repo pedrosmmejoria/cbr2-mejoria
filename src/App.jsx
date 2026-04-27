@@ -2081,7 +2081,7 @@ export default function App() {
         <GlobalStyles />
         <div className="text-center cbr-splash">
           <div className="flex items-center justify-center w-20 h-20 mx-auto mb-5 rounded-2xl cbr-pulse-glow" style={{ backgroundColor: COLORS.primary }}>
-            <MejoriaIcon size={42} variant="gold" />
+            <span style={{ color: COLORS.accent, fontFamily: STYLES.serif, fontWeight: 800, fontSize: '1.75rem', letterSpacing: '-0.03em' }}>CBR</span>
           </div>
           <div className="text-4xl mb-2" style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.03em' }}>CBR <span style={{ color: COLORS.accent }}>2.0</span></div>
           <div className="text-[11px] tracking-[0.3em] uppercase mb-1" style={{ color: COLORS.textMuted, fontWeight: 700 }}>Tu prep para el examen JTBR</div>
@@ -2132,7 +2132,7 @@ function Header({ view, setView }) {
         <div className="flex items-center justify-between py-3.5 sm:py-4">
           <button onClick={() => setView('home')} className="flex items-center gap-3 group">
             <div className="flex items-center justify-center w-11 h-11 rounded-xl transition-transform group-hover:scale-105" style={{ backgroundColor: COLORS.primary, boxShadow: `0 2px 10px ${COLORS.primary}44` }}>
-              <MejoriaIcon size={28} variant="gold" />
+              <span style={{ color: COLORS.accent, fontFamily: STYLES.serif, fontWeight: 800, fontSize: '0.95rem', letterSpacing: '-0.02em' }}>CBR</span>
             </div>
             <div className="text-left">
               <div className="text-lg sm:text-xl leading-tight" style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.02em' }}>CBR <span style={{ color: COLORS.accent }}>2.0</span></div>
@@ -2221,7 +2221,7 @@ function Footer() {
         <div className="flex flex-col sm:flex-row justify-between gap-6 sm:items-end">
           <div className="flex items-start gap-3">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl" style={{ backgroundColor: COLORS.primary }}>
-              <MejoriaIcon size={24} variant="gold" />
+              <span style={{ color: COLORS.accent, fontFamily: STYLES.serif, fontWeight: 800, fontSize: '0.85rem', letterSpacing: '-0.02em' }}>CBR</span>
             </div>
             <div>
               <div className="text-xl leading-tight" style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.02em' }}>CBR <span style={{ color: COLORS.accent }}>2.0</span></div>
@@ -2230,7 +2230,6 @@ function Footer() {
           </div>
           <div className="text-xs leading-relaxed sm:text-right" style={{ color: COLORS.textMuted }}>
             <div className="flex items-center sm:justify-end gap-2 mb-1">
-              <MejoriaIcon size={20} />
               <span>by <strong style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 700, fontSize: '13px', letterSpacing: '0.04em' }}>MEJORÍA</strong></span>
             </div>
             <div>Material no oficial. Referencia académica.</div>
