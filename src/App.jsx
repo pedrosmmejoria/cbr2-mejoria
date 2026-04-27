@@ -2350,7 +2350,7 @@ function HomeView({ setView, setSelectedBlock, stats }) {
           <Sparkles size={14} style={{ color: COLORS.accent }} />
           <div className="text-[11px] sm:text-xs tracking-[0.3em] uppercase" style={{ color: COLORS.accent, fontWeight: 700 }}>Plataforma de preparación</div>
         </div>
-        <h1 className="text-5xl sm:text-6xl md:text-7xl leading-[0.98] mb-5 sm:mb-6 max-w-4xl" style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.035em' }}>
+        <h1 className="text-4xl sm:text-6xl md:text-7xl leading-[1.02] mb-5 sm:mb-6 max-w-4xl" style={{ color: COLORS.primary, fontFamily: STYLES.serif, fontWeight: 800, letterSpacing: '-0.03em' }}>
           Prepárate para la<br/>
           <span style={{ color: COLORS.accent }}>prueba de la JTBR</span>
         </h1>
