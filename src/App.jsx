@@ -1911,24 +1911,23 @@ const STYLES = {
   sans: "'Manrope', 'Avenir Next', 'Avenir', 'Helvetica Neue', system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
 };
 
-// ─── Ícono de marca MEJORÍA ───
-// Símbolo Mars/flecha circular, dos colores de marca exactos.
-//
-// variant="default" → círculo #1a3a5c + flecha #c9a961  (fondos claros)
-// variant="gold"    → todo #c9a961 una tinta            (fondos oscuros navy)
-//
-// Geometría derivada matemáticamente:
-//   Canvas 100×100. Círculo cx=42 cy=58 r=30 sw=12.
-//   Borde exterior stroke en 45°: (42+(30+6)·cos45°, 58−(30+6)·sin45°) ≈ (67,33)
-//   Punta flecha: (92,8). Brazos cabeza: 24 unidades c/u.
+// ─── Ícono de marca MEJORÍA — PNG real, colorizado con CSS filter ───
+// variant="gold"    → dorado #c9a961  (cajas navy / fondos oscuros)
+// variant="default" → navy  #1a3a5c  (fondos claros / footer)
 function MejoriaIcon({ size = 24, variant = 'default', className = '' }) {
-  const c = variant === 'gold' ? '#c9a961' : '#1a3a5c';
+  const filter = variant === 'gold'
+    ? 'brightness(0) saturate(100%) invert(74%) sepia(28%) saturate(612%) hue-rotate(4deg) brightness(101%) contrast(94%)'
+    : 'brightness(0) saturate(100%) invert(18%) sepia(42%) saturate(868%) hue-rotate(186deg) brightness(95%) contrast(97%)';
   return (
-    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <circle cx="42" cy="58" r="30" stroke={c} strokeWidth="12" fill="none" />
-      <line x1="67" y1="33" x2="92" y2="8" stroke="#c9a961" strokeWidth="12" strokeLinecap="round" />
-      <path d="M68 8 L92 8 L92 32" stroke="#c9a961" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-    </svg>
+    <img
+      src="/logo-mejoria.png"
+      width={size}
+      height={size}
+      alt=""
+      draggable={false}
+      style={{ filter, objectFit: 'contain', display: 'block', userSelect: 'none' }}
+      className={className}
+    />
   );
 }
 
